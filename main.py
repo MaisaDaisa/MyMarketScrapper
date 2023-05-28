@@ -1,3 +1,5 @@
+import sqlite3
+
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -45,6 +47,8 @@ for num_page in range(1, pages):
             price = None
 
         post = Post(name, price, condition, link, subscribtion, has_delivery, page)
+
         database.add_post(post)
+
 
 driver.close()

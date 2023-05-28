@@ -13,7 +13,7 @@ class PostDB:
                 name TEXT,
                 price FLOAT,
                 condition TEXT,
-                link TEXT DISTINCT,
+                link TEXT,
                 subscription TEXT,
                 has_delivery TEXT,
                 page INTEGER
@@ -22,10 +22,13 @@ class PostDB:
 
     def add_post(self, post):
         self.cursor.execute("""
-            INSERT INTO postdb VALUES
+            INSERT OR IGNORE INTO postdb VALUES
             (?, ?, ?, ?, ?, ?, ?, ?)
         """, (self.get_last_id()+1, post.name, post.price, post.condition, post.link, post.subscription, post.has_delivery, post.page))
         self.conn.commit()
+
+
+
     def get_last_id(self):
         self.cursor.execute("""
             SELECT id FROM postdb ORDER BY id DESC LIMIT 1
